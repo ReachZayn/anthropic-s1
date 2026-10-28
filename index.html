@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta property="og:title" content="Red ink, black ink: Anthropic's S-1, line by line">
-<meta property="og:description" content="The $80.7bn loss, the $974m operating profit, the cash, the compute bill, and a contract map of who Anthropic owes and who funds it.">
+<meta property="og:description" content="The loss bridge, what converts into shares, the operating turn, who is paying, the cash, the compute bill, and a contract map of who Anthropic owes and who funds it.">
 <meta property="og:type" content="website">
 <style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Red Ink, Black Ink</title>
@@ -125,20 +125,6 @@ svg.chart{width:100%;height:auto;display:block;overflow:visible}
 .ledger .n{text-align:right;font-family:var(--f-fig);font-weight:600;font-size:clamp(18px,2.6vw,24px);white-space:nowrap;font-variant-numeric:tabular-nums}
 .ledger tr:last-child td{border-bottom:3px double var(--ink)}
 
-/* timeline */
-.tl{position:relative}
-.tlrow{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--rule2)}
-.tlrow .nm{font-family:var(--f-label);font-weight:600;font-size:14px;line-height:1.2}
-.tlrow .nm small{display:block;font-weight:500;font-size:11px;color:var(--ink2)}
-.track{position:relative;height:30px}
-.track .yr{position:absolute;top:0;bottom:0;border-left:1px dashed var(--rule)}
-.bar{position:absolute;top:4px;height:22px;background:var(--ink);display:flex;align-items:center;justify-content:flex-end;padding:0 6px;transform-origin:left center;overflow:hidden}
-.bar span{font-family:var(--f-fig);font-weight:600;font-size:12px;color:var(--paper);white-space:nowrap}
-.bar.lease{background:transparent;border:1.5px dashed var(--red)}
-.bar.lease span{color:var(--red)}
-.axis{display:grid;grid-template-columns:86px 1fr;gap:10px;margin-top:4px}
-.axis .ticks{position:relative;height:16px}
-.axis .ticks span{position:absolute;transform:translateX(-50%);font-family:var(--f-fig);font-size:11px;color:var(--ink2)}
 .scale{margin-top:22px;display:grid;gap:10px}
 .scale .row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;font-family:var(--f-label);font-size:14px}
 .scale .row .fig{font-weight:600;font-size:18px}
@@ -163,6 +149,35 @@ footer ul{margin:0;padding-left:18px}
 .vcap{position:fixed;left:16px;right:16px;bottom:18px;z-index:50;background:var(--ink);color:var(--paper);font-family:var(--f-label);font-weight:600;font-size:17px;line-height:1.3;padding:12px 14px;border-left:5px solid var(--red)}
 .vtap{position:fixed;z-index:60;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;border:2px solid var(--red);background:color-mix(in srgb,var(--red) 22%,transparent);pointer-events:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* bridge, comparisons, readout 3x2 */
+.bridge text{font-family:var(--f-label);fill:var(--ink2);font-size:10px}
+.bridge .lbl{fill:var(--ink);font-size:11px}
+.bridge .v{font-family:var(--f-fig);font-size:10px;font-weight:600;fill:var(--ink)}
+.bridge .v.neg{fill:var(--red)}
+.bridge .bar.neg{fill:var(--red)}.bridge .bar.pos{fill:var(--ink)}.bridge .bar.tot{fill:var(--ink)}
+.bridge .con{stroke:var(--rule);stroke-width:1;stroke-dasharray:2 3}
+.bridge .ax{stroke:var(--ink);stroke-width:1}
+.cmp{display:grid;gap:10px}
+.cmprow{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:baseline;font-family:var(--f-label);font-size:14px}
+.cmprow .fig{font-weight:600;font-size:18px}
+.cmprow .meter{height:12px;background:var(--rule2);grid-column:1/-1}
+.cmprow .meter i{display:block;height:100%;background:var(--ink)}
+.cmprow .meter i.r{background:var(--red)}
+.scale .row span small.sm{display:block;font-size:11px;color:var(--ink2)}
+.readout{grid-template-columns:repeat(3,1fr)}
+.readout div:nth-child(3n+1){padding-left:0;border-left:0}
+.readout div:nth-child(n+4){border-top:1px solid var(--rule)}
+@media (max-width:460px){.readout{grid-template-columns:1fr 1fr}.readout div:nth-child(3n+1){padding-left:8px;border-left:1px solid var(--rule)}.readout div:nth-child(2n+1){padding-left:0;border-left:0}.readout div:nth-child(n+4){border-top:0}.readout div:nth-child(n+3){border-top:1px solid var(--rule)}}
+.named{display:grid;gap:7px;margin-top:10px}
+.named .row{display:grid;grid-template-columns:150px 1fr auto;gap:8px;align-items:center;font-family:var(--f-label);font-size:13px}
+.named .row .nm small{display:block;font-size:11px;color:var(--ink2)}
+.named .trk{height:12px;background:var(--rule2)}
+.named .nbar{height:100%;background:var(--ink)}
+.named .nbar.soft{background:transparent;border:1.5px dashed var(--red);box-sizing:border-box}
+.named .nbar.lease{background:transparent;border:1.5px dashed var(--ink);box-sizing:border-box}
+.named .fig{font-weight:600;font-size:14px;white-space:nowrap}
+@media (max-width:460px){.named .row{grid-template-columns:1fr auto}.named .trk{grid-column:1/-1}}
 </style>
 </head>
 <body>
@@ -186,31 +201,52 @@ footer ul{margin:0;padding-left:18px}
 <section class="s" id="loss"><div class="wrap">
   <div class="text">
     <div class="lab">1 · The loss</div>
-    <h2>$72.4bn of the loss is a mark on financing instruments.</h2>
-    <p>Anthropic booked a <b>$80.748bn</b> GAAP net loss in the first half of 2026. Of that, <b>$72.388bn</b> came from the change in fair value of convertible notes, derivative liabilities and SAFEs, mainly because those instruments rose in value.</p>
-    <p>No cash left the business for that charge in the period. The cost arrives later, as dilution when the instruments convert into shares.</p>
+    <h2>$81bn of the $80.7bn loss is marks, not operations.</h2>
+    <p>Anthropic booked a <b>$80.748bn</b> GAAP net loss for the first half of 2026. The operating business lost <b>$693m</b> over the same six months. The gap is two non-cash marks: <b>$72.388bn</b> on convertible notes, derivative liabilities and SAFEs, and <b>$8.720bn</b> on other financial instruments carried at fair value, both driven by the company's own valuation rising.</p>
+    <p>No cash left for either mark. The cost arrives later, as dilution when the instruments convert into shares.</p>
   </div>
   <div class="figure">
-    <div class="figcap"><span class="lab">H1 2026 net loss, $bn</span><span class="lab">Source: S-1</span></div>
-    <div class="bigpct fig" id="pct">89.6%</div>
-    <p class="note" style="margin:6px 0 16px">of the reported net loss is the fair-value charge.</p>
-    <div class="split" role="img" aria-label="Net loss of 80.748 billion dollars: 72.388 billion fair-value charge, 8.360 billion everything else">
-      <div class="seg fv" id="seg-fv" style="width:89.65%"></div><div class="seg rest" id="seg-rest" style="width:10.35%"></div>
+    <div class="figcap"><span class="lab">H1 2026 · net loss bridge, $bn</span><span class="lab">Source: S-1, quarterly table</span></div>
+    <svg class="chart bridge" id="bridge" viewBox="0 0 360 232" role="img" aria-label="Bridge from operating loss of 0.693 billion to net loss of 80.748 billion dollars"></svg>
+    <div class="splitkey" style="grid-template-columns:1fr 1fr 1fr">
+      <div><span class="fig red">−$0.69bn</span><span class="t">Operating loss, six months</span></div>
+      <div><span class="fig red">−$81.1bn</span><span class="t">Two fair-value marks, non-cash</span></div>
+      <div><span class="fig">+$1.1bn</span><span class="t">Interest income on the cash pile</span></div>
     </div>
-    <div class="splitkey">
-      <div><span class="fig red">$72.388bn</span><span class="t">Change in fair value of convertible notes, derivative liabilities and SAFEs. Non-cash in the period.</span></div>
-      <div><span class="fig">$8.360bn</span><span class="t">Everything else. Not a clean measure of underlying loss or cash burn.</span></div>
+    <p class="note">Other income (expense), net of −$8.757bn is mostly the $8.720bn mark on "certain mark-to-market financial instruments" in the filing's non-GAAP reconciliation. Tax was $21m.</p>
+  </div>
+</div></section>
+
+<section class="s" id="convert"><div class="wrap">
+  <div class="text">
+    <div class="lab">2 · What the loss turns into</div>
+    <h2>$10.2bn of notes is carried at $108.6bn. That becomes shares.</h2>
+    <p>Since November 2023 Anthropic has issued <b>$10.2bn</b> of convertible promissory notes. At 30 June 2026 they sit on the balance sheet at a fair value of <b>$108.6bn</b>, because they convert into equity at prices far below today's valuation. The $72.4bn mark is the growth in that gap.</p>
+    <p>Redeemable convertible preferred stock is carried at <b>$157.5bn</b> against a <b>$136.3bn</b> liquidation preference. Amazon's notes convert only up to a <b>12%</b> ownership cap; anything above rolls over as a new note.</p>
+    <p>The number that matters, the post-conversion share count, is still blank in the preliminary filing.</p>
+  </div>
+  <div class="figure">
+    <div class="figcap"><span class="lab">Balance sheet, 30 Jun 2026, $bn</span><span class="lab">Source: S-1</span></div>
+    <div class="cmp">
+      <div class="cmprow"><span>Convertible notes, principal issued since Nov 2023</span><span class="fig">$10.2bn</span><div class="meter"><i style="width:6.5%"></i></div></div>
+      <div class="cmprow"><span>Convertible notes payable, carrying value</span><span class="fig red">$108.6bn</span><div class="meter"><i class="r" style="width:68.9%"></i></div></div>
+      <div class="cmprow"><span>Redeemable convertible preferred, liquidation preference</span><span class="fig">$136.3bn</span><div class="meter"><i style="width:86.5%"></i></div></div>
+      <div class="cmprow"><span>Redeemable convertible preferred, carrying value</span><span class="fig red">$157.5bn</span><div class="meter"><i class="r" style="width:100%"></i></div></div>
+    </div>
+    <div class="splitkey" style="margin-top:18px">
+      <div><span class="fig">10.6×</span><span class="t">Carrying value ÷ principal on the notes (calculated)</span></div>
+      <div><span class="fig">blank</span><span class="t">Post-conversion share count in the preliminary S-1</span></div>
     </div>
   </div>
 </div></section>
 
 <section class="s" id="growth"><div class="wrap">
   <div class="text">
-    <div class="lab">2 · The business</div>
+    <div class="lab">3 · The business</div>
     <h2>Revenue outran compute, and the operating line turned.</h2>
-    <p>Quarterly revenue went from <b>$0.79bn</b> in Q2 2025 to <b>$11.56bn</b> in Q2 2026, about 15 times in a year and 2.4 times in the last quarter alone.</p>
-    <p>A year ago, compute and infrastructure expense was <b>177%</b> of revenue. In Q2 2026 it was <b>48%</b>. Operating income moved from a $1.67bn loss in Q1 to a <b>$974m profit</b> in Q2, an 8.4% margin.</p>
-    <p>The filing's compute and infrastructure line covers training, inference and internal workloads, so compute ÷ revenue is a blended ratio, not a gross margin.</p>
+    <p>Quarterly revenue went from <b>$0.79bn</b> in Q2 2025 to <b>$11.56bn</b> in Q2 2026, about 15 times in a year and 2.4 times in the last quarter alone. Compute and infrastructure expense fell from <b>177%</b> of revenue to <b>48%</b>. The filing credits part of that to pricing: Claude Opus 5.5 cut customer cost per task by about <b>40%</b> against Opus 5.</p>
+    <p>Q2's <b>$974m</b> operating income is after <b>$1.26bn</b> of stock-based compensation. The filing's own adjusted measure, which strips SBC, non-cash charitable contributions and the $1.5bn Bartz settlement, shows <b>$1.62bn</b> for the half, a <b>10%</b> adjusted margin against a <b>(4)%</b> GAAP one.</p>
+    <p>One caution the filing states itself: models released in the prior six months produced <b>over 80%</b> of revenue in the quarter to 30 September 2026. Revenue is tied to release cadence.</p>
   </div>
   <div class="figure">
     <div class="figcap"><span class="lab">By quarter, $bn</span>
@@ -222,47 +258,86 @@ footer ul{margin:0;padding-left:18px}
       <div><dt>Compute &amp; infra</dt><dd id="r-cmp">$5.56bn</dd></div>
       <div><dt>Compute ÷ revenue</dt><dd id="r-ratio">48%</dd></div>
       <div><dt>Operating income</dt><dd id="r-op">+$0.97bn</dd></div>
+      <div><dt>Stock-based comp.</dt><dd id="r-sbc">$1.26bn</dd></div>
+      <div><dt>Op. income + SBC</dt><dd id="r-opsbc">$2.24bn</dd></div>
     </dl>
+    <p class="note">Compute and infrastructure covers training, inference and internal workloads, so compute ÷ revenue is a blended ratio, not a gross margin. Q2 2026 SBC is H1 ($2,185m) less Q1 ($924m), calculated.</p>
   </div>
 </div></section>
 
-<section class="s" id="cash"><div class="wrap">
+<section class="s" id="demand"><div class="wrap">
   <div class="text">
-    <div class="lab">3 · The cash</div>
-    <h2>Four numbers that don't add up, and aren't meant to.</h2>
-    <p>Net loss includes the fair-value mark. Operating cash flow doesn't, and came in <b>positive</b>. Financing is money raised. The balance is what sat in cash and short-term investments at the end of June.</p>
-    <p>A large cash pile is not proof that future infrastructure is funded. Lease payments and working-capital timing still matter.</p>
+    <div class="lab">4 · Who's paying</div>
+    <h2>Concentration is falling as the base broadens.</h2>
+    <p>Customers paying <b>$100,000 or more</b> a year went from over 950 to over <b>11,900</b> in twelve months. The top five accounted for about <b>25%</b> of revenue over nine months and none passed 10%. Revenue from outside the top five rose from <b>64%</b> to <b>79%</b> of the total between Q1 and Q3 2026, while each top-five customer still set a record.</p>
+    <p>Deferred revenue, cash billed ahead of service, rose from <b>$269m</b> to <b>$1,650m</b> in six months. Receivables rose faster, from $909m to <b>$5.8bn</b>.</p>
+    <p>The filing's Run-Rate Revenue figure, dated 31 October 2026, is left blank in this preliminary version.</p>
   </div>
   <div class="figure">
-    <table class="ledger" id="ledger">
-      <caption class="lab">$ in millions · brackets are negative</caption>
-      <thead><tr><th>Line</th><th style="text-align:right">Amount</th></tr></thead>
+    <table class="ledger">
+      <caption class="lab">Demand metrics the filing states</caption>
+      <thead><tr><th>Metric</th><th style="text-align:right">Value</th></tr></thead>
       <tbody>
-        <tr><td class="l">GAAP net loss<small>Six months to 30 Jun 2026</small></td><td class="n red" data-v="-80748">(80,748)</td></tr>
-        <tr><td class="l">Net cash from operating activities<small>Six months to 30 Jun 2026</small></td><td class="n" data-v="3929">3,929</td></tr>
-        <tr><td class="l">Net cash from financing activities<small>Six months to 30 Jun 2026</small></td><td class="n" data-v="110774">110,774</td></tr>
-        <tr><td class="l">Cash and short-term investments<small>At 30 Jun 2026, excl. restricted cash</small></td><td class="n" data-v="131651">131,651</td></tr>
+        <tr><td class="l">Customers with ≥$100k TTM revenue<small>30 Sep 2025 → 30 Sep 2026</small></td><td class="n">&gt;950 → &gt;11,900</td></tr>
+        <tr><td class="l">Top five customers, share of revenue<small>Nine months to 30 Sep 2026</small></td><td class="n">~25%</td></tr>
+        <tr><td class="l">Largest single customer<small>Nine months to 30 Sep 2026</small></td><td class="n">&lt;10%</td></tr>
+        <tr><td class="l">Revenue from outside the top five<small>Q1 2026 → Q3 2026</small></td><td class="n">64% → 79%</td></tr>
+        <tr><td class="l">≥$100k customers using Platform and a first-party app<small>Q4 2025 → Q3 2026</small></td><td class="n">~30% → &gt;50%</td></tr>
+        <tr><td class="l">Revenue from models released in prior six months<small>Q3 2026</small></td><td class="n red">&gt;80%</td></tr>
+        <tr><td class="l">Deferred revenue, $m<small>31 Dec 2025 → 30 Jun 2026</small></td><td class="n">269 → 1,650</td></tr>
+        <tr><td class="l">Run-Rate Revenue<small>As of 31 Oct 2026</small></td><td class="n">blank in S-1</td></tr>
       </tbody>
     </table>
   </div>
 </div></section>
 
-<section class="s" id="compute"><div class="wrap">
+<section class="s" id="cash"><div class="wrap">
   <div class="text">
-    <div class="lab">4 · The bill</div>
-    <h2>The compute bill runs for years, not quarters.</h2>
-    <p>Three cloud minimum-spend agreements total <b>$269.4bn</b>. Broadcom equipment finance leases add <b>$161.2bn</b> of rent, excluding interest. These four named arrangements come to <b>$430.6bn</b>. The filing lists more on top: SpaceXAI GPU compute of up to $120.5bn, and estimated payments of $125–150bn for additional TPU compute and more than $20bn for AMD systems, which sit outside its contractual commitments table.</p>
-    <p>For scale, Q2 revenue times four is about <b>$46bn</b>. The two aren't like for like: the arrangements run for years and mix minimum spend with lease rent. Read them as a schedule, not a debt balance.</p>
+    <div class="lab">5 · The cash</div>
+    <h2>Rented now, leased later: why capex looks tiny.</h2>
+    <p>Operating cash flow was <b>+$3.9bn</b> for the half against the −$80.7bn net loss, because both marks are added straight back. Purchases of property and equipment were only <b>$482m</b>, so cash after capex was about <b>$3.4bn</b>.</p>
+    <p>That flatters the picture twice. Compute is rented from cloud providers, so it runs through operating expense, and the Broadcom equipment leases bill only once hardware is "ready for service", so the capex-like cash arrives later as rent. Inside operating cash flow, <b>$1.4bn</b> of deferred revenue and <b>$2.7bn</b> of payables growth helped, while <b>$5.0bn</b> of receivables growth hurt.</p>
+    <p>The $110.4bn raised was preferred stock, not debt. Of it, $19bn was parked in short-term investments.</p>
   </div>
   <div class="figure">
-    <div class="figcap"><span class="lab">Four named arrangements, $bn, by term</span><span class="lab">Source: S-1</span></div>
-    <div class="tl" id="tl"></div>
-    <div class="axis"><span></span><div class="ticks" id="ticks"></div></div>
-    <p class="note">Broadcom leases have five-year terms. The bar shows that length, not the start dates.</p>
-    <div class="scale">
-      <div class="row"><span>Four named arrangements</span><span class="fig">$430.6bn</span><div class="meter"><i class="r" id="m1" style="width:100%"></i></div></div>
-      <div class="row"><span>Q2 2026 revenue × 4</span><span class="fig">$46.2bn</span><div class="meter"><i id="m2" style="width:10.73%"></i></div></div>
+    <table class="ledger" id="ledger">
+      <caption class="lab">$ in millions · six months to 30 Jun 2026 · brackets are negative</caption>
+      <thead><tr><th>Line</th><th style="text-align:right">Amount</th></tr></thead>
+      <tbody>
+        <tr><td class="l">GAAP net loss</td><td class="n red" data-v="-80748">(80,748)</td></tr>
+        <tr><td class="l">Add back: two fair-value marks<small>Non-cash</small></td><td class="n" data-v="81108">81,108</td></tr>
+        <tr><td class="l">Add back: stock-based compensation<small>Non-cash</small></td><td class="n" data-v="2185">2,185</td></tr>
+        <tr><td class="l">Working capital and other<small>Receivables (4,982), deferred revenue 1,380, payables 2,679, other</small></td><td class="n" data-v="1384">1,384</td></tr>
+        <tr><td class="l">Net cash from operating activities</td><td class="n" data-v="3929">3,929</td></tr>
+        <tr><td class="l">Purchases of property and equipment</td><td class="n red" data-v="-482">(482)</td></tr>
+        <tr><td class="l">Cash after capex<small>Calculated: 3,929 − 482</small></td><td class="n" data-v="3447">3,447</td></tr>
+        <tr><td class="l">Proceeds from preferred stock, net</td><td class="n" data-v="110432">110,432</td></tr>
+        <tr><td class="l">Cash and short-term investments at 30 Jun 2026<small>Excludes $2.5bn restricted cash</small></td><td class="n" data-v="131651">131,651</td></tr>
+      </tbody>
+    </table>
+    <p class="note">"Working capital and other" is the balancing line between the stated items and the stated operating cash flow; it is calculated, not a filing line. The marks are the $72,388m and $8,720m fair-value changes.</p>
+  </div>
+</div></section>
+
+<section class="s" id="compute"><div class="wrap">
+  <div class="text">
+    <div class="lab">6 · The bill</div>
+    <h2>The filing's own totals are larger than the named deals.</h2>
+    <p>At 30 June 2026 the filing states <b>$265.6bn</b> of fixed or minimum guaranteed commitments under compute agreements, on terms of one to twenty years, and separately <b>$321.4bn</b> of leases signed but not yet commenced, up from $50.2bn six months earlier. Agreements entered into after 31 December 2025 alone carry <b>$417bn</b> of future minimum payments. These overlap each other and the named deals, so they are never added together.</p>
+    <p>The only year-by-year schedule in the filing is the non-cancelable commitments table at 31 December 2025, <b>$54.6bn</b>, which pre-dates most of the big agreements. The June 2026 table is blank. For scale, Q2 revenue times four is <b>$46.2bn</b>.</p>
+    <p>Three of the largest suppliers also stand behind <b>$77bn</b> of undrawn note facilities (Google $20bn, Amazon $15bn, Broadcom $42bn), beside a <b>$15bn</b> revolver. The map in the next section draws that loop.</p>
+  </div>
+  <div class="figure">
+    <div class="figcap"><span class="lab">Filing-stated compute figures, $bn</span><span class="lab">Source: S-1 notes</span></div>
+    <div class="scale" style="margin-top:0">
+      <div class="row"><span>Fixed or minimum guaranteed commitments<small class="sm">30 Jun 2026</small></span><span class="fig">$265.6bn</span><div class="meter"><i class="r" id="m1" style="width:63.7%"></i></div></div>
+      <div class="row"><span>Leases executed, not yet commenced<small class="sm">30 Jun 2026</small></span><span class="fig">$321.4bn</span><div class="meter"><i class="r" id="m3" style="width:77.1%"></i></div></div>
+      <div class="row"><span>Agreements entered after 31 Dec 2025, future minimum payments</span><span class="fig">$417bn</span><div class="meter"><i class="r" id="m4" style="width:100%"></i></div></div>
+      <div class="row"><span>Q2 2026 revenue × 4<small class="sm">Calculated</small></span><span class="fig">$46.2bn</span><div class="meter"><i id="m2" style="width:11.1%"></i></div></div>
     </div>
+    <div class="figcap" style="margin-top:22px"><span class="lab">Named agreements inside those totals, $bn</span><span class="lab">Minimum spend unless stated</span></div>
+    <div id="named"></div>
+    <p class="note">Broadcom is finance-lease rent excluding interest and sits inside the leases figure. TPU "estimated", Nscale and SpaceXAI "up to", and AMD "expected to exceed" are the filing's words and are not contractual minimums. Shares of each total are not disclosed.</p>
   </div>
 </div></section>
 
@@ -352,7 +427,7 @@ footer ul{margin:0;padding-left:18px}
 <section class="s" id="map"><div class="wrap">
   <div class="maptop">
     <div class="text">
-      <div class="lab">5 · The map</div>
+      <div class="lab">7 · The map</div>
       <h2>Who Anthropic owes, who funds it, and where that's the same company.</h2>
       <p>Every node and edge below is a typed record from the S-1: a party, an obligation, a role. Click one and the panel shows the filing's own words, the section they sit in, and the link into the SEC text. What the filing does not state is marked not disclosed, never estimated.</p>
     </div>
@@ -511,16 +586,17 @@ var ro=new ResizeObserver(function(){resize();fit()});ro.observe($('mcanvas'));
 
 <section class="s" id="questions"><div class="wrap">
   <div class="text">
-    <div class="lab">7 · What's still open</div>
+    <div class="lab">8 · What's still open</div>
     <h2>What I'd want answered before underwriting it.</h2>
-    <p>The filing shows strong demand and a first quarter of operating profit. It leaves the offer price, final share count and post-conversion ownership open.</p>
+    <p>The filing shows demand that is broadening, a first quarter of operating profit, and a compute bill that is mostly still to come. It leaves the offer price, the final share count and the post-conversion ownership open.</p>
   </div>
   <div>
     <ul class="qs">
-      <li><b>Does the Q2 margin hold?</b><span>One profitable quarter is an inflection. It isn't a trend yet.</span></li>
-      <li><b>How much dilution comes with conversion?</b><span>The $72.4bn mark becomes shares. The final count isn't in the filing yet.</span></li>
-      <li><b>Does revenue keep outrunning compute?</b><span>The test comes when the cloud and lease commitments bill at scale.</span></li>
-      <li><b>What if capacity lands before demand?</b><span>Utilization and pricing decide whether the bill is a burden or a moat.</span></li>
+      <li><b>Does the Q2 margin survive the leases commencing?</b><span>$321bn of leases had not started billing at 30 June. Operating income was $974m in the quarter.</span></li>
+      <li><b>How many shares does $108.6bn of notes become?</b><span>Principal is $10.2bn. The conversion count isn't in the preliminary filing.</span></li>
+      <li><b>How much of the revenue is cadence?</b><span>Over 80% of Q3 revenue came from models under six months old. A slower release year is a different revenue year.</span></li>
+      <li><b>Is the supplier-lender-shareholder loop a moat or a dependency?</b><span>Amazon, Google and Broadcom sell the compute, hold the note facilities and own or may own the shares.</span></li>
+      <li><b>What does the June 2026 commitments table say?</b><span>It is blank. The Dec 2025 schedule totals $54.6bn; the June figures are five to eight times that.</span></li>
     </ul>
     <p class="ask">Which number would you underwrite first?</p>
   </div>
@@ -545,7 +621,7 @@ var ro=new ResizeObserver(function(){resize();fit()});ro.observe($('mcanvas'));
 <script>
 (function(){
 'use strict';
-var Q=[{n:'Q1 25',r:.376,c:.944,o:-.935},{n:'Q2 25',r:.787,c:1.390,o:-1.200},{n:'Q3 25',r:1.382,c:2.047,o:-3.089},{n:'Q4 25',r:2.040,c:2.945,o:-2.836},{n:'Q1 26',r:4.731,c:3.387,o:-1.667},{n:'Q2 26',r:11.555,c:5.558,o:.974}];
+var Q=[{n:'Q1 25',r:.376,c:.944,o:-.935,s:.105},{n:'Q2 25',r:.787,c:1.390,o:-1.200,s:.181},{n:'Q3 25',r:1.382,c:2.047,o:-3.089,s:.305},{n:'Q4 25',r:2.040,c:2.945,o:-2.836,s:.574},{n:'Q1 26',r:4.731,c:3.387,o:-1.667,s:.924},{n:'Q2 26',r:11.555,c:5.558,o:.974,s:1.261}];
 var NS='http://www.w3.org/2000/svg',sel=5,grow=1;
 function $(id){return document.getElementById(id)}
 function el(t,a,txt){var n=document.createElementNS(NS,t);for(var k in a)n.setAttribute(k,a[k]);if(txt!=null)n.textContent=txt;return n}
@@ -579,43 +655,54 @@ function draw(){
   c.append(el('line',{class:'zero',x1:X0,x2:X0+W,y1:ZERO,y2:ZERO}));
   c.append(el('text',{x:X0-6,y:ZERO+3,'text-anchor':'end'},'0'));
 }
-var cur={r:Q[5].r,c:Q[5].c,o:Q[5].o};
-function setReadout(r,c,o){
+var cur={r:Q[5].r,c:Q[5].c,o:Q[5].o,s:Q[5].s};
+function setReadout(r,c,o,sb){
   $('r-rev').textContent=bn(r);$('r-cmp').textContent=bn(c);$('r-ratio').textContent=Math.round(c/r*100)+'%';
   var op=$('r-op');op.textContent=(o<0?'−':'+')+'$'+Math.abs(o).toFixed(2)+'bn';op.classList.toggle('red',o<0);
+  if(sb!=null){$('r-sbc').textContent='$'+sb.toFixed(2)+'bn';var x=o+sb;var e=$('r-opsbc');e.textContent=(x<0?'−':'+')+'$'+Math.abs(x).toFixed(2)+'bn';e.classList.toggle('red',x<0)}
 }
 function pick(i,ms){
   sel=i;[].forEach.call($('qbtns').children,function(b,j){b.setAttribute('aria-pressed',String(j===i))});draw();
-  var a={r:cur.r,c:cur.c,o:cur.o},b=Q[i];
-  tw(ms==null?450:ms,function(t){cur={r:a.r+(b.r-a.r)*t,c:a.c+(b.c-a.c)*t,o:a.o+(b.o-a.o)*t};setReadout(cur.r,cur.c,cur.o)});
+  var a={r:cur.r,c:cur.c,o:cur.o,s:cur.s},b=Q[i];
+  tw(ms==null?450:ms,function(t){cur={r:a.r+(b.r-a.r)*t,c:a.c+(b.c-a.c)*t,o:a.o+(b.o-a.o)*t,s:a.s+(b.s-a.s)*t};setReadout(cur.r,cur.c,cur.o,cur.s)});
 }
 Q.forEach(function(q,i){var b=document.createElement('button');b.type='button';b.textContent=q.n;b.id='q'+i;b.setAttribute('aria-pressed',String(i===sel));b.addEventListener('click',function(){pick(i)});$('qbtns').append(b)});
-draw();setReadout(cur.r,cur.c,cur.o);
+draw();setReadout(cur.r,cur.c,cur.o,cur.s);
 
-/* timeline */
-var Y0=2026,Y1=2037;function px(y){return (y-Y0)/(Y1-Y0)*100}
-var T=[{n:'Microsoft',s:'Cloud min. spend',a:2026+10/12,b:2033+5/12,v:44.9},{n:'Google',s:'Cloud min. spend',a:2026+3/12,b:2033+7/12,v:114.5},{n:'Amazon',s:'Cloud min. spend',a:2026+4/12,b:2036+4/12,v:110.0},{n:'Broadcom',s:'Equipment leases',a:2026,b:2031,v:161.2,lease:1}];
-T.forEach(function(r,i){
-  var row=document.createElement('div');row.className='tlrow';
-  row.innerHTML='<div class="nm"></div><div class="track"></div>';
-  row.firstChild.textContent=r.n;var sm=document.createElement('small');sm.textContent=r.s;row.firstChild.append(sm);
-  var tr=row.lastChild;for(var y=2027;y<=2036;y++){var g=document.createElement('i');g.className='yr';g.style.left=px(y)+'%';tr.append(g)}
-  var bar=document.createElement('div');bar.className='bar'+(r.lease?' lease':'');bar.id='bar'+i;bar.style.left=px(r.a)+'%';bar.style.width=(px(r.b)-px(r.a))+'%';
-  var sp=document.createElement('span');sp.textContent='$'+r.v.toFixed(1)+'bn';bar.append(sp);tr.append(bar);$('tl').append(row);
-});
-[2026,2028,2030,2032,2034,2036].forEach(function(y){var s=document.createElement('span');s.style.left=px(y)+'%';s.textContent="'"+String(y).slice(2);$('ticks').append(s)});
-
+/* loss bridge */
+var BR=[{l:'Operating loss',v:-0.693},{l:'Interest income',v:1.111},{l:'FV: notes, SAFEs, derivatives',v:-72.388},{l:'Other (mostly MTM instruments)',v:-8.757},{l:'Tax',v:-0.021}];
+var brG=1;
+function drawBridge(){var c=$('bridge');c.replaceChildren();var X0=170,X1=330,MIN=-82,MAX=2;function X(v){return X0+(v-MIN)/(MAX-MIN)*(X1-X0)}
+  var run=0,y=16,rowH=33;
+  c.append(el('line',{class:'ax',x1:X(0),x2:X(0),y1:6,y2:224}));
+  BR.forEach(function(r,i){var v=r.v*brG,a=run,b=run+v;run=b;
+    var t=el('text',{class:'lbl',x:6,y:y+14});t.textContent=r.l;c.append(t);
+    c.append(el('rect',{class:'bar '+(r.v<0?'neg':'pos'),x:Math.min(X(a),X(b)),y:y+2,width:Math.max(1,Math.abs(X(b)-X(a))),height:20}));
+    var tv=el('text',{class:'v'+(r.v<0?' neg':''),x:X(0)+(r.v<0?6:Math.max(X(a),X(b))-X(0)+6),y:y+16});tv.textContent=(r.v<0?'−':'+')+Math.abs(r.v).toFixed(Math.abs(r.v)<1?3:1);c.append(tv);
+    if(i<BR.length-1)c.append(el('line',{class:'con',x1:X(b),x2:X(b),y1:y+22,y2:y+rowH+2}));
+    y+=rowH;});
+  var t=el('text',{class:'lbl',x:6,y:y+16,'font-weight':700});t.textContent='Net loss';c.append(t);
+  c.append(el('rect',{class:'bar tot',x:X(run),y:y+2,width:Math.max(1,X(0)-X(run)),height:24}));
+  var tv=el('text',{class:'v neg',x:X(0)+6,y:y+18});tv.textContent='−'+Math.abs(run).toFixed(1);c.append(tv);
+  [-80,-60,-40,-20,0].forEach(function(g){var tx=el('text',{x:X(g),y:226,'text-anchor':'middle'});tx.textContent=g;c.append(tx)});}
+drawBridge();
+/* named agreements */
+var NA=[{n:'Broadcom',s:'Equipment lease rent, excl. interest',v:161.2,k:'lease'},{n:'Google / TPU providers',s:'Additional TPU compute, estimated',v:150,lo:125,k:'soft'},{n:'SpaceXAI',s:'NVIDIA GPU compute, up to',v:120.5,k:'soft'},{n:'Google',s:'Cloud minimum spend, Apr 2026–Jul 2033',v:114.5},{n:'Amazon',s:'Cloud minimum spend, May 2026–Apr 2036',v:110.0},{n:'Microsoft',s:'Cloud minimum spend, Nov 2026–May 2033',v:44.9},{n:'Nscale',s:'GPU services, up to, into 2033',v:44.6,k:'soft'},{n:'Lambda',s:'Lambda Agreements',v:41.3},{n:'AMD',s:'Helios systems, expected to exceed',v:20,k:'soft'}];
+NA.forEach(function(r,i){var d=document.createElement('div');d.className='row';var nm=document.createElement('div');nm.className='nm';nm.textContent=r.n;var sm=document.createElement('small');sm.textContent=r.s;nm.append(sm);
+  var trk=document.createElement('div');trk.className='trk';var bar=document.createElement('div');bar.className='nbar'+(r.k?' '+r.k:'');bar.id='bar'+i;bar.style.width=(r.v/165*100)+'%';trk.append(bar);
+  var f=document.createElement('span');f.className='fig';f.textContent=(r.lo?'$'+r.lo+'–'+r.v:(r.k==='soft'?'≤$':'$')+r.v.toFixed(1))+'bn';d.append(nm,trk,f);$('named').append(d)});
+$('named').className='named';
 /* hooks the video recorder calls; the live page never needs them */
 function fmtLoss(v){return '−$'+v.toFixed(1)+'bn'}
 window.S1={
   hero:function(ms){tw(ms,function(t){$('h-loss').textContent=fmtLoss(80.748*t);$('h-op').textContent='+$'+Math.round(974*t)+'m'})},
-  split:function(ms){tw(ms,function(t){$('seg-fv').style.width=(89.65*t)+'%';$('seg-rest').style.width=(10.35*t)+'%';$('pct').textContent=(89.6*t).toFixed(1)+'%'})},
+  split:function(ms){tw(ms,function(t){brG=t;drawBridge()})},
   chart:function(ms){tw(ms,function(t){grow=t;draw()})},
   pick:function(i,ms){pick(i,ms)},
   ledger:function(ms){var cells=[].slice.call(document.querySelectorAll('#ledger .n'));tw(ms,function(t){cells.forEach(function(c){var v=+c.dataset.v*t,s=Math.round(Math.abs(v)).toLocaleString('en-US');c.textContent=v<0?'('+s+')':s})})},
-  bills:function(ms){T.forEach(function(r,i){$('bar'+i).style.width='0%'});$('m1').style.width='0%';$('m2').style.width='0%';
-    tw(ms,function(t){T.forEach(function(r,i){$('bar'+i).style.width=((px(r.b)-px(r.a))*t)+'%'})},function(){tw(ms*.8,function(t){$('m1').style.width=(100*t)+'%';$('m2').style.width=(10.73*t)+'%'})})},
-  reset:function(){grow=0;draw();$('seg-fv').style.width='0%';$('seg-rest').style.width='0%';}
+  bills:function(ms){var ws=NA.map(function(r){return r.v/165*100});NA.forEach(function(r,i){$('bar'+i).style.width='0%'});['m1','m2','m3','m4'].forEach(function(id){$(id).style.width='0%'});
+    tw(ms,function(t){NA.forEach(function(r,i){$('bar'+i).style.width=(ws[i]*t)+'%'})},function(){tw(ms*.8,function(t){$('m1').style.width=(63.7*t)+'%';$('m3').style.width=(77.1*t)+'%';$('m4').style.width=(100*t)+'%';$('m2').style.width=(11.1*t)+'%'})})},
+  reset:function(){grow=0;draw();brG=0;drawBridge();}
 };
 })();
 </script>
