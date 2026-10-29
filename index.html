@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta property="og:title" content="Red ink, black ink: Anthropic's S-1, line by line">
-<meta property="og:description" content="The loss bridge, what converts into shares, the operating turn, who is paying, the cash, the compute bill, and a contract map of who Anthropic owes and who funds it.">
+<meta property="og:description" content="The loss bridge, dilution, the operating turn, who is paying, the cash, the compute bill, a three-method valuation with bull and bear cases, and a contract map of who Anthropic owes and who funds it.">
 <meta property="og:type" content="website">
 <style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Red Ink, Black Ink</title>
@@ -342,6 +342,179 @@ footer ul{margin:0;padding-left:18px}
 </div></section>
 
 <style>
+/* valuation */
+#value .wrap{grid-template-columns:1fr}
+.valtop{display:grid;gap:14px}
+@media (min-width:880px){.valtop{grid-template-columns:5fr 7fr;gap:48px;align-items:start}}
+.valbox{background:var(--sheet);border:1px solid var(--rule);min-width:0}
+.vtool{display:flex;flex-wrap:wrap;gap:6px;padding:10px 12px;border-bottom:1px solid var(--rule);align-items:center}
+.vtool .grp{display:flex}
+.vtool button{font-family:var(--f-label);font-size:12px;font-weight:600;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:7px 11px;cursor:pointer}
+.vtool .grp button+button{border-left:0}
+.vtool button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.vtool button:focus-visible,.lever select:focus-visible,.lever input:focus-visible{outline:2px solid var(--red);outline-offset:1px}
+.vtool .sp{flex:1}
+.vtool .tag{font-family:var(--f-label);font-size:12px;color:var(--ink2)}
+.vbody{display:grid;grid-template-columns:1fr;min-width:0}
+@media (min-width:880px){.vbody{grid-template-columns:minmax(0,1fr) 340px}}
+.levers{padding:14px 16px;display:grid;gap:10px;border-bottom:1px solid var(--rule)}
+@media (min-width:880px){.levers{border-bottom:0;border-right:1px solid var(--rule)}}
+.lever{display:grid;grid-template-columns:1fr;gap:4px}
+.lever label{font-family:var(--f-label);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2);display:flex;justify-content:space-between;gap:8px}
+.lever label b{font-family:var(--f-fig);font-weight:600;color:var(--ink);text-transform:none;letter-spacing:0}
+.lever select,.lever input[type=range]{width:100%;font-family:var(--f-label);font-size:13px;color:var(--ink);background:var(--paper);border:1px solid var(--rule);padding:6px 8px}
+.lever input[type=range]{padding:0;height:26px;accent-color:var(--red)}
+.lever small{font-size:12px;color:var(--ink2);line-height:1.4}
+.vout{padding:14px 16px;display:grid;gap:12px;align-content:start}
+.vout .big{font-family:var(--f-fig);font-weight:600;font-size:clamp(34px,4.5vw,46px);line-height:1;letter-spacing:-.03em}
+.vout .big.red{color:var(--red)}
+.vout .lab{margin-bottom:2px}
+.range{position:relative;height:30px;margin-top:6px}
+.range .trk{position:absolute;left:0;right:0;top:12px;height:6px;background:var(--rule2)}
+.range .band{position:absolute;top:12px;height:6px;background:var(--rule)}
+.range .mk{position:absolute;top:4px;width:3px;height:22px;background:var(--red);transform:translateX(-50%)}
+.range .mk.ink{background:var(--ink)}
+.range .t{position:absolute;top:30px;font-family:var(--f-fig);font-size:10px;color:var(--ink2);transform:translateX(-50%);white-space:nowrap}
+.vgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px}
+.vgrid div{border-top:1px solid var(--rule);padding-top:5px}
+.vgrid dt{font-family:var(--f-label);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2)}
+.vgrid dd{margin:2px 0 0;font-family:var(--f-fig);font-weight:600;font-size:17px;white-space:nowrap}
+.vgrid dd.red{color:var(--red)}
+.thesis{border-top:1px solid var(--rule);padding:12px 16px 16px;display:grid;gap:8px}
+.thesis h4{font-family:var(--f-display);font-weight:600;font-size:18px;margin:0;line-height:1.25}
+.thesis ul{margin:0;padding-left:18px;font-size:14px;line-height:1.5;color:var(--ink2)}
+.thesis li b{color:var(--ink)}
+.thesis blockquote{margin:4px 0 0;padding:8px 10px 8px 12px;border-left:3px solid var(--red);background:var(--paper);font-size:13px;line-height:1.5;font-style:italic}
+.thesis blockquote small{display:block;font-style:normal;font-family:var(--f-label);font-size:11px;color:var(--ink2);margin-top:4px}
+.sens{border-top:1px solid var(--rule);padding:12px 16px 16px;overflow-x:auto}
+.sens table{border-collapse:collapse;font-family:var(--f-fig);font-size:12px;min-width:420px}
+.sens th,.sens td{padding:6px 8px;text-align:right;border-bottom:1px solid var(--rule2)}
+.sens th{font-family:var(--f-label);font-weight:600;color:var(--ink2);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.sens td.y{text-align:left;font-family:var(--f-label);font-weight:600}
+.sens td.neg{color:var(--red)}
+.sens td.sel{outline:2px solid var(--red);outline-offset:-2px;font-weight:600}
+.sens td.pr{background:var(--hl)}
+.sens caption{text-align:left;font-family:var(--f-label);font-size:12px;color:var(--ink2);padding:0 0 8px;caption-side:top}
+.sens caption b{color:var(--ink)}
+</style>
+<section class="s" id="value"><div class="wrap">
+  <div class="valtop">
+    <div class="text">
+      <div class="lab">7 · The value</div>
+      <h2>Our view: about $1.4tn, below the bottom of the range.</h2>
+      <p>Our number blends three methods: a DCF on Aswath Damodaran's structure (<b>$1.36tn</b>), a probability-weighted scenario value (<b>$1.60tn</b>) and comparable price-to-sales (<b>$1.17tn</b>), weighted 40/30/30 to <b>$1.38tn</b>. Damodaran's own DCF gives <b>$1.475tn</b>; our check of his spreadsheet reproduces it to the dollar. We keep his story and most of his inputs, correct two data entries, and take one driver lower.</p>
+      <p>The toggles rebuild the DCF live. Sameer is the locked view; AD base is his published case; Bull and Bear are the two cases from his post; Custom lets you move each lever.</p>
+    </div>
+    <div class="text"><p><b>The story in one line:</b> a premium-market AI leader whose revenue approaches $1tn in a decade, at a 27.5% operating margin after regulatory drag, with a 10% chance of a funding failure. <b>Where we differ from AD:</b> LTM revenue is 19,708, not 20,608 (a transposition in his sheet); options are 902.7m, not 0.9m; and we reinvest $1 per $2.50 of new revenue rather than $3, because $321bn of leases are already signed and not yet billing. Together those take $111bn off his DCF.</p></div>
+  </div>
+  <div class="valbox">
+    <div class="vtool">
+      <div class="grp" role="group" aria-label="Scenario">
+        <button type="button" data-scn="sameer" aria-pressed="true">Sameer</button><button type="button" data-scn="base" aria-pressed="false">AD base</button>
+        <button type="button" data-scn="bull" aria-pressed="false">Bull</button>
+        <button type="button" data-scn="bear" aria-pressed="false">Bear</button>
+        <button type="button" data-scn="custom" aria-pressed="false">Custom</button>
+      </div>
+      <span class="sp"></span><span class="tag" id="vtag">AD's inputs, 26 Oct 2026</span>
+    </div>
+    <div class="vbody">
+      <div class="levers" id="levers">
+        <div class="lever"><label for="lv-rev">2036 revenue <b id="lv-rev-v"></b></label>
+          <select id="lv-rev"><option value="0.09">A1 · $200bn · AI as a tool</option><option value="0.268">A2 · $500bn · job replacement in future</option><option value="0.3671">A3 · $800bn · selective job replacement</option><option value="0.42" selected>A6 · ~$1.0tn · AD's pick</option><option value="0.46">A4 · $1.2tn · broad job replacement</option><option value="0.5125">A5 · $1.5tn · AI as industry player</option></select>
+          <small>Sets the years 2–5 CAGR. Year 1 is fixed at +400%.</small></div>
+        <div class="lever"><label for="lv-mix">Margin mix <b id="lv-mix-v"></b></label>
+          <select id="lv-mix"><option value="0.10">B1 · Mass market 100% · 10%</option><option value="0.175">B2 · Mass 75 / Premium 25 · 17.5%</option><option value="0.25">B3 · 50 / 50 · 25%</option><option value="0.325" selected>B4 · Mass 25 / Premium 75 · 32.5%</option><option value="0.40">B5 · Premium 100% · 40%</option></select></div>
+        <div class="lever"><label for="lv-reg">Regulatory drag on margin <b id="lv-reg-v"></b></label>
+          <select id="lv-reg"><option value="0">E1 · None</option><option value="-0.05" selected>E2 · −5% minor restrictions</option><option value="-0.10">E3 · −10% moderate</option><option value="-0.15">E4 · −15% major</option></select></div>
+        <div class="lever"><label for="lv-s2c">Sales to capital <b id="lv-s2c-v"></b></label>
+          <select id="lv-s2c"><option value="1">C1 · 1.0 · compute scarce and costly</option><option value="1.5">C2 · 1.5 · high near term, moderate later</option><option value="2.5">C3 · 2.5 · high near term, ease later</option><option value="3" selected>C4 · 3.0 · ease near term</option><option value="4">C5 · 4.0 · surplus and cheap</option></select>
+          <small>$ of new revenue per $ reinvested.</small></div>
+        <div class="lever"><label for="lv-coc">Cost of capital <b id="lv-coc-v"></b></label>
+          <select id="lv-coc"><option value="0.0779">D3 · 7.79% · all firms, 1st quartile</option><option value="0.0916">D4 · 9.16% · all firms, median</option><option value="0.0934">D2 · 9.34% · technology median</option><option value="0.0974" selected>D1 · 9.74% · AD's company-specific</option><option value="0.0988">D5 · 9.88% · all firms, 3rd quartile</option></select></div>
+        <div class="lever"><label for="lv-pf">Probability of failure <b id="lv-pf-v"></b></label><input id="lv-pf" type="range" min="0" max="0.4" step="0.05" value="0.10"></div>
+        <div class="lever"><label for="lv-roic">ROIC after year 10 <b id="lv-roic-v"></b></label><input id="lv-roic" type="range" min="0.0913" max="0.25" step="0.0001" value="0.15"><small>9.13% = cost of capital, no excess returns.</small></div>
+        <div class="lever"><label><span>Data corrections</span></label>
+          <label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:13px;justify-content:flex-start;gap:8px"><input type="checkbox" id="lv-fixrev"> LTM revenue 19,708 (AD typed 20,608)</label>
+          <label style="text-transform:none;letter-spacing:0;font-weight:500;font-size:13px;justify-content:flex-start;gap:8px"><input type="checkbox" id="lv-fixopt"> 902.7m options, not 0.9m</label></div>
+      </div>
+      <div class="vout">
+        <div><div class="lab">Value of equity</div><div class="big" id="v-eq">$1.48tn</div></div>
+        <div><div class="lab">Against the reported $1.5–2.0tn offer range</div>
+          <div class="range"><div class="trk"></div><div class="band" id="v-band"></div><div class="mk ink" id="v-mk175"></div><div class="mk" id="v-mk"></div><span class="t" id="v-t0"></span><span class="t" id="v-t1"></span><span class="t" id="v-t2"></span></div></div>
+        <dl class="vgrid">
+          <div><dt>Value ÷ $1.75tn</dt><dd id="v-pv"></dd></div>
+          <div><dt>Value per share</dt><dd id="v-vps"></dd></div>
+          <div><dt>2036 revenue</dt><dd id="v-rev"></dd></div>
+          <div><dt>2036 op. income</dt><dd id="v-ebit"></dd></div>
+          <div><dt>PV of commitments (debt)</dt><dd id="v-debt"></dd></div>
+          <div><dt>Year-10 ROIC</dt><dd id="v-roic"></dd></div>
+        </dl>
+        <div id="v-blend"></div><p class="note" style="margin:0" id="v-note"></p>
+      </div>
+    </div>
+    <div class="thesis" id="thesis"></div>
+    <div class="sens">
+      <table id="senstab"><caption><b>Sensitivity:</b> equity value in $bn, current scenario's other inputs held. Outlined cell = current. Shaded = at or above $1.75tn.</caption></table>
+    </div>
+  </div>
+  <p class="note">Model: Sameer's investment model (DCF on Damodaran's structure, scenario and relative methods; workbook linked from the GitHub page). The AD block reproduces $1,475,879m equity and $447.34 per share exactly. Bull and Bear use the inputs stated in his post; they come out at $4.08tn and −$389bn against his $4.04tn and −$373bn, because the post does not state every input he moved. Per-share values depend on his share count (3,074.6m pre-IPO, IPO shares issued at value) and are secondary to equity value. Source: <a href="https://aswathdamodaran.blogspot.com/2026/10/the-anthropic-prospectus-arrives-ipo.html" target="_blank" rel="noopener noreferrer">A. Damodaran, 28 Oct 2026</a>. Not investment advice.</p>
+</div></section>
+<script>
+(function(){
+'use strict';
+var $=function(id){return document.getElementById(id)};
+var BASE={rev0:20608,g1:4.0,g25:0.42,m1:0.05,mix:0.325,reg:-0.05,conv:5,s2c:3,coc:0.0974,rf:0.049,cocT:0.0913,roicT:0.15,taxT:0.25,pf:0.10,rec:0.5,debt:109316,commit:363019.56,cash:112389,ipo:100000,nonop:3929,shares:3074.6,opt:472.3,price:525};
+var SCN={sameer:{rev0:19708,opt:472314,s2c:2.5},base:{},bull:{g25:0.5125,mix:0.40,reg:0,s2c:4,coc:0.0779},bear:{g25:0.09,mix:0.10,reg:-0.15,s2c:1,coc:0.0988},custom:{rev0:19708,opt:472314,s2c:2.5}};
+var PS_MULT=11.89, W={dcf:.4,scn:.3,rel:.3}, PB=0.25, PBE=0.25;
+function run(p){var m_t=p.mix+p.reg;var rev=[p.rev0],g=[0];for(var t=1;t<=10;t++){var gt=t===1?p.g1:(t<=5?p.g25:p.g25-((p.g25-p.rf)/5)*(t-5));g.push(gt);rev.push(rev[t-1]*(1+gt))}
+  var revT=rev[10]*(1+p.rf),marg=[0];for(t=1;t<=10;t++)marg.push(t===1?p.m1:(t<=p.conv?m_t-((m_t-p.m1)*(p.conv-t)/p.conv):m_t));
+  var ebit=[0],tax=[0],nol=[0],eat=[0],reinv=[0],fcff=[0],coc=[0],df=[1],pv=[0],sum=0;
+  for(t=1;t<=10;t++){ebit.push(rev[t]*marg[t]);tax.push(t<=5?0:p.taxT*(t-5)/5);var e=ebit[t],n0=nol[t-1];
+    if(e<0){nol.push(n0-e);eat.push(e)}else if(e<n0){nol.push(n0-e);eat.push(e)}else{nol.push(0);eat.push(e-(e-n0)*tax[t])}
+    reinv.push(((t<10?rev[t+1]:revT)-rev[t])/p.s2c);fcff.push(eat[t]-reinv[t]);coc.push(t<=5?p.coc:p.coc-((p.coc-p.cocT)/5)*(t-5));df.push(df[t-1]/(1+coc[t]));pv.push(fcff[t]*df[t]);sum+=pv[t]}
+  var ebitT=revT*m_t,eatT=ebitT*(1-p.taxT),reinvT=p.rf>0?(p.rf/p.roicT)*eatT:0,fcffT=eatT-reinvT,tv=fcffT/(p.cocT-p.rf),pvtv=tv*df[10];
+  var sumpv=sum+pvtv,op=sumpv*(1-p.pf)+sumpv*p.rec*p.pf,eq=op-p.debt-p.commit+p.cash+p.ipo+p.nonop,eqc=eq-p.opt,vps=(eqc-p.ipo)/p.shares;
+  var ic=533836;for(t=1;t<=9;t++)ic+=reinv[t];
+  return {eq:eq,vps:vps,rev10:rev[10],ebit10:ebit[10],roic10:eat[10]/ic,commit:p.commit,rev1:rev[1]}}
+function fixed(o){var p={};for(var k in BASE)p[k]=BASE[k];for(k in o)p[k]=o[k];return run(p).eq}
+var BULL=fixed(SCN.bull),BEAR=fixed(SCN.bear);
+function blend(r){var sc=PB*BULL+(1-PB-PBE)*r.eq+PBE*BEAR,rel=PS_MULT*r.rev1;return {dcf:r.eq,scn:sc,rel:rel,all:W.dcf*r.eq+W.scn*sc+W.rel*rel}}
+var scn='sameer';
+function params(){var p={};for(var k in BASE)p[k]=BASE[k];var o=SCN[scn];for(k in o)p[k]=o[k];
+  if(scn==='custom'){p.g25=+$('lv-rev').value;p.mix=+$('lv-mix').value;p.reg=+$('lv-reg').value;p.s2c=+$('lv-s2c').value;p.coc=+$('lv-coc').value;p.pf=+$('lv-pf').value;p.roicT=+$('lv-roic').value;p.rev0=$('lv-fixrev').checked?19708:20608;p.opt=$('lv-fixopt').checked?472314:472.3}
+  return p}
+function setLevers(p){$('lv-rev').value=String(p.g25);$('lv-mix').value=String(p.mix);$('lv-reg').value=String(p.reg);$('lv-s2c').value=String(p.s2c);$('lv-coc').value=String(p.coc);$('lv-pf').value=p.pf;$('lv-roic').value=p.roicT;$('lv-fixrev').checked=p.rev0!==20608;$('lv-fixopt').checked=p.opt>1000}
+function tn(v){var a=Math.abs(v);var s=a>=1e6?'$'+(a/1e6).toFixed(2)+'tn':'$'+Math.round(a/1000)+'bn';return (v<0?'−':'')+s}
+var TH={sameer:{h:'Sameer: AD\'s story, data corrected, compute heavier',b:['<b>Revenue ~$0.97tn in 2036</b> on AD\'s path from a corrected LTM base of 19,708.','<b>Margin 27.5%</b>: 75% premium at 40%, 25% mass at 10%, less 5% regulatory drag. Compute fell from 177% to 48% of revenue in five quarters.','<b>$1 reinvested per $2.50 of new revenue</b> (AD: $3). $321bn of leases are signed and not yet billing; near-term intensity is contracted, not optional.','<b>Cost of capital 9.74%</b>, 10% funding-failure risk, 50% recovery: AD\'s inputs, our reasons in the workbook.','<b>Options 902.7m</b>, as the S-1 states, so value per share is secondary to equity value until the S-1/A gives the real count.'],q:'Buy below the blended value; above the mid-point of the range, sit out.'},base:{h:'Base: Damodaran\'s case, our view',b:['<b>Revenue ~$1.0tn in 2036.</b> "It is plausible that Anthropic\'s revenues could approach a trillion dollars in a decade", on an end market of "$5 trillion or greater".','<b>Margin 27.5%.</b> 75% premium / 25% mass market gives 32.5%, "the ninth decile of US companies", less 5% for regulation.','<b>Reinvest $1 per $3 of new revenue</b>, in line with technology companies, as compute costs ease.','<b>Cost of capital 9.74%</b>, between the US median and third quartile; "among the least critical" inputs.','<b>10% chance of failure</b>, losing half the value if it does.'],q:'If it is priced well above my estimate of $1.48 trillion, I will sit out the frenzy.'},
+ bull:{h:'Bull: AD\'s best case, $4.04tn in his post',b:['<b>$1.5tn revenue in 2036</b>: AI as an industry player, not a tool.','<b>40% margin</b>: all premium, no regulatory drag.','<b>$4 of revenue per $1 reinvested</b>: compute becomes a surplus and cheap.','<b>7.79% cost of capital</b>: first-quartile risk.','Still 10% chance of failure. He calls this "possible, but unlikely".'],q:'Both extremes are possible, but unlikely; apply the 3P test: possible, plausible, probable.'},
+ bear:{h:'Bear: AD\'s worst case, −$373bn in his post',b:['<b>$200bn revenue in 2036</b>: AI stays a tool.','<b>Margin −5%</b>: 10% mass-market margin less 15% from major regulation.','<b>$1 of revenue per $1 reinvested</b>: compute stays scarce and costly.','<b>9.88% cost of capital.</b>','With $472bn of capitalised commitments and debt against it, the equity is worth less than nothing.'],q:'The value of equity is −$373 billion, and the company will not survive as a going concern.'},
+ custom:{h:'Custom: your levers, AD\'s structure',b:['Each lever is one of the choices from his spreadsheet; the model and the equity bridge are his.','The two data corrections are ours: the LTM revenue cell (5485 for 4585) and the options count (0.902 for 902.7 million).','Correcting both leaves equity value at about $1.40tn and value per share near $269.'],q:'I have no reason to believe that the market will or should agree with me.'}};
+function render(){var p=params(),r=run(p);
+  $('v-eq').textContent=tn(r.eq);$('v-eq').classList.toggle('red',r.eq<0);
+  var lo=1.0e6,hi=2.4e6,x=function(v){return Math.max(0,Math.min(100,(v-lo)/(hi-lo)*100))+'%'};
+  $('v-band').style.left=x(1.5e6);$('v-band').style.width=(x(2.0e6).replace('%','')-x(1.5e6).replace('%',''))+'%';$('v-mk175').style.left=x(1.75e6);$('v-mk').style.left=x(r.eq);
+  $('v-t0').style.left=x(1.5e6);$('v-t0').textContent='$1.5tn';$('v-t1').style.left=x(1.75e6);$('v-t1').textContent='$1.75tn';$('v-t2').style.left=x(2.0e6);$('v-t2').textContent='$2.0tn';
+  $('v-pv').textContent=(r.eq/1.75e6*100).toFixed(0)+'%';$('v-pv').className=r.eq<1.75e6?'red':'';
+  $('v-vps').textContent=(r.vps<0?'−':'')+'$'+Math.abs(r.vps).toFixed(0);$('v-vps').className=r.vps<0?'red':'';
+  $('v-rev').textContent='$'+Math.round(r.rev10/1000)+'bn';$('v-ebit').textContent=(r.ebit10<0?'−':'')+'$'+Math.abs(Math.round(r.ebit10/1000))+'bn';$('v-ebit').className=r.ebit10<0?'red':'';
+  $('v-debt').textContent='$'+Math.round(r.commit/1000)+'bn';$('v-roic').textContent=(r.roic10*100).toFixed(1)+'%';
+  $('v-note').textContent=scn==='sameer'?'Scenario = 25% AD bull + 50% this case + 25% AD bear. Relative = median comp P/S of 11.9x (MSFT, GOOGL, META, NVDA, PLTR) × next-twelve-month revenue. Weights and comps are in the workbook.':scn==='base'?'Per-share value uses AD\'s option entry of 0.9m options. With the S-1\'s 902.7m vested options it is about $294. Equity value is unaffected.':(scn==='custom'?'Equity value is the primary output; per-share value depends on the share count the amended S-1 will give.':'');
+  $('lv-rev-v').textContent='$'+Math.round(r.rev10/1000)+'bn';$('lv-mix-v').textContent=(p.mix*100).toFixed(1)+'%';$('lv-reg-v').textContent=(p.reg*100).toFixed(0)+'%';$('lv-s2c-v').textContent=p.s2c.toFixed(1)+'x';$('lv-coc-v').textContent=(p.coc*100).toFixed(2)+'%';$('lv-pf-v').textContent=(p.pf*100).toFixed(0)+'%';$('lv-roic-v').textContent=(p.roicT*100).toFixed(1)+'%';
+  $('vtag').textContent={sameer:'Sameer\'s locked inputs',base:'AD\'s inputs, 26 Oct 2026',bull:'AD\'s best case',bear:'AD\'s worst case',custom:'Your inputs'}[scn];
+  var bl=blend(r);$('v-blend').innerHTML='<div class="lab">Blended value (DCF 40 / Scenario 30 / Relative 30)</div><div class="big'+(bl.all<0?' red':'')+'">'+tn(bl.all)+'</div><dl class="vgrid" style="margin-top:8px"><div><dt>DCF</dt><dd'+(bl.dcf<0?' class="red"':'')+'>'+tn(bl.dcf)+'</dd></div><div><dt>Scenario (25/50/25)</dt><dd'+(bl.scn<0?' class="red"':'')+'>'+tn(bl.scn)+'</dd></div><div><dt>Relative (11.9× NTM rev.)</dt><dd>'+tn(bl.rel)+'</dd></div><div><dt>Blend ÷ $1.75tn</dt><dd'+(bl.all<1.75e6?' class="red"':'')+'>'+(bl.all/1.75e6*100).toFixed(0)+'%</dd></div></dl>';
+  var th=TH[scn];$('thesis').innerHTML='<h4>'+th.h+'</h4><ul>'+th.b.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul><blockquote>“'+th.q+'”<small>'+(scn==='sameer'?'Sameer, 29 Oct 2026':'A. Damodaran, 28 Oct 2026')+'</small></blockquote>';
+  var xs=[0.268,0.3671,0.42,0.46,0.5125],xl=['$500bn','$800bn','$1.0tn','$1.2tn','$1.5tn'],ys=[0.10,0.175,0.25,0.275,0.325,0.40];
+  var h='<thead><tr><th style="text-align:left">Target margin ↓ / 2036 revenue →</th>'+xl.map(function(l){return '<th>'+l+'</th>'}).join('')+'</tr></thead><tbody>';
+  ys.forEach(function(y){h+='<tr><td class="y">'+(y*100).toFixed(1)+'%</td>';xs.forEach(function(xv){var q={};for(var k in p)q[k]=p[k];q.g25=xv;q.mix=y;q.reg=0;var e=run(q).eq;var cls=(e<0?'neg':'')+(Math.abs(xv-p.g25)<1e-9&&Math.abs(y-(p.mix+p.reg))<1e-9?' sel':'')+(e>=1.75e6?' pr':'');h+='<td class="'+cls+'">'+(e<0?'−':'')+Math.round(Math.abs(e)/1000).toLocaleString('en-US')+'</td>'});h+='</tr>'});
+  $('senstab').innerHTML=$('senstab').querySelector('caption').outerHTML+h+'</tbody>';
+  document.querySelectorAll('#levers select,#levers input').forEach(function(el){el.disabled=scn!=='custom'});}
+document.querySelectorAll('[data-scn]').forEach(function(b){b.addEventListener('click',function(){scn=b.dataset.scn;document.querySelectorAll('[data-scn]').forEach(function(x){x.setAttribute('aria-pressed',String(x===b))});var p={};for(var k in BASE)p[k]=BASE[k];var o=SCN[scn];for(k in o)p[k]=o[k];setLevers(p);render()})});
+document.querySelectorAll('#levers select,#levers input').forEach(function(el){el.addEventListener('input',render);el.addEventListener('change',render)});
+(function(){var p={};for(var k in BASE)p[k]=BASE[k];for(k in SCN.sameer)p[k]=SCN.sameer[k];setLevers(p)})();render();
+})();
+</script>
+
+<style>
 /* contract map */
 :root{--steel:#4C6A8A;--amber:#B9792B;--violet:#6B4C8A}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--steel:#86A6C8;--amber:#D9A050;--violet:#A98CCB}}
@@ -427,7 +600,7 @@ footer ul{margin:0;padding-left:18px}
 <section class="s" id="map"><div class="wrap">
   <div class="maptop">
     <div class="text">
-      <div class="lab">7 · The map</div>
+      <div class="lab">8 · The map</div>
       <h2>Who Anthropic owes, who funds it, and where that's the same company.</h2>
       <p>Every node and edge below is a typed record from the S-1: a party, an obligation, a role. Click one and the panel shows the filing's own words, the section they sit in, and the link into the SEC text. What the filing does not state is marked not disclosed, never estimated.</p>
     </div>
@@ -586,7 +759,7 @@ var ro=new ResizeObserver(function(){resize();fit()});ro.observe($('mcanvas'));
 
 <section class="s" id="questions"><div class="wrap">
   <div class="text">
-    <div class="lab">8 · What's still open</div>
+    <div class="lab">9 · What's still open</div>
     <h2>What I'd want answered before underwriting it.</h2>
     <p>The filing shows demand that is broadening, a first quarter of operating profit, and a compute bill that is mostly still to come. It leaves the offer price, the final share count and the post-conversion ownership open.</p>
   </div>
